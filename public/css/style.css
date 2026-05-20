@@ -286,7 +286,7 @@ img {
 
 /* SeachBar */
 .searchBar {
-  /* visibility: hidden; */
+  visibility: hidden;
   background-color: var(--black);
   padding: 4px 0;
   left: 0;
@@ -310,6 +310,7 @@ img {
   right: 0;
   color: var(--gray-light);
   padding: 15px;
+  cursor:pointer;
 }
 
 

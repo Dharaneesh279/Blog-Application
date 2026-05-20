@@ -8,7 +8,7 @@ router.get('/',async(req,res) =>{
         title: "Blog API",
         description: "A simple Blog API built with Node.js and Express.js"
         }
-        let perPage = 5;
+        let perPage =3;
         let page = parseInt(req.query.page) || 1;
 
         const data = await Post.aggregate([{ $sort: {createdAt: -1}}])
@@ -35,12 +35,45 @@ router.get('/',async(req,res) =>{
 
 });
 
+// get and post 
+
+router.get('/post/:id', async(req,res) =>{
+    try {   
+        let slug =req.params.id;
+        const data = await Post.findById({_id: slug});
+        const locals = {
+            title: data.title,
+            description: "A simple Blog API built with Node.js and Express.js"
+        }
+        res.render('post',{locals,data});
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 
+//POST
 
-
-
-
+router.post('/search',async(req,res) => {
+    try {
+         const locals = {
+        title: "Search",
+        description: "Simple Blog created with NodeJs, Express and MongoDB"
+        }
+        let searchTerm = req.body.searchTerm;
+        const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+        
+        const data = await Post.find({
+            $or: [
+                {title : {$regex : new RegExp(searchNoSpecialChar, "i")}},
+                {body : {$regex : new RegExp(searchNoSpecialChar, "i")}}
+            ]
+        });
+        res.render("search", { locals, data });
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 
 
