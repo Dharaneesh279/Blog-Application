@@ -35,7 +35,7 @@ router.get('/',async(req,res) =>{
 
 });
 
-// get and post 
+// get
 
 router.get('/post/:id', async(req,res) =>{
     try {   
