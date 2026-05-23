@@ -1,0 +1,18 @@
+<a href="/dashboard">&larr;Back to Dashboard</a>
+
+<div class="admin-title">
+    <h2>View / Edit Post</h2>
+    <form action="/delete-post/<%= data._id %>?_method=DELETE" method="POST">
+        <input type="submit" value="Delete" class="btn btn-delete">
+    </form>
+</div>
+
+<form action="/edit-post/<%= data._id %>?_method=PUT" method="POST">
+    <label for="title"><b>Title:</b></label>
+    <input type="text" name="title" placeholder="Enter post title">
+
+    <label for="body"><b>Content:</b></label>
+    <textarea name="body" placeholder="Enter post content" cols="50" rows="10"></textarea>
+    <input type="submit" value="Update" class="btn"></input>
+
+</form> 
