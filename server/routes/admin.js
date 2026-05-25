@@ -147,7 +147,7 @@ router.get('/edit-post/:id', authMiddleware ,async(req,res) =>{
 
 router.put('/edit-post/:id', authMiddleware ,async(req,res) =>{
     try{
-        await Post.findById(req.params.id,{
+        await Post.findByIdAndUpdate(req.params.id,{
             title: req.body.title,
             body: req.body.body,
             updatedAt: Date.now()
@@ -158,30 +158,17 @@ router.put('/edit-post/:id', authMiddleware ,async(req,res) =>{
     }
 });
 
+//Delete
+//admin deletePost
 
-
-
-
-
-// router.post('/admin', async(req,res) =>{
-//     try {
-//         const {username,password} = req.body;
-//         if(req.body.username === 'admin' && req.body.password === 'password'){
-//             res.send('You are logged in');
-//         }
-//         else{
-//             res.send('Invalid username or password');
-//         }
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
-
-
-
-
-
-
+router.delete('/delete-post/:id', authMiddleware ,async(req,res) =>{
+    try{
+         await Post.deleteOne({_id:req.params.id});
+         res.redirect('/dashboard');
+    }catch(error){
+        console.log(error);
+    }
+});
 
 
 //post 
@@ -202,6 +189,21 @@ router.post('/register', async(req,res) =>{
         console.log(error);
     }
 });
+
+
+//get
+//admin logout
+
+router.get('/logout',(req,res) =>{
+    res.clearCookie('token');
+    res.redirect('/');
+});
+
+
+
+
+
+
 
 
 

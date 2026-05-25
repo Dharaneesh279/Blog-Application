@@ -5,8 +5,8 @@ const Post  = require('../models/Post');
 router.get('/',async(req,res) =>{
     try {
         const locals = {
-        title: "Blog API",
-        description: "A simple Blog API built with Node.js and Express.js"
+            title: "Blog API",
+            description: "A simple Blog API built with Node.js and Express.js"
         }
         let perPage =3;
         let page = parseInt(req.query.page) || 1;
@@ -27,7 +27,8 @@ router.get('/',async(req,res) =>{
             data,
             current: page,
             nextPage: hasNextPage ? nextPage : null,
-            previousPage: previousPage >= 1 ? previousPage : null
+            previousPage: previousPage >= 1 ? previousPage : null,
+            currentRoute: "/"
         });
     } catch (error) {
         console.log(error);
@@ -45,7 +46,7 @@ router.get('/post/:id', async(req,res) =>{
             title: data.title,
             description: "A simple Blog API built with Node.js and Express.js"
         }
-        res.render('post',{locals,data});
+        res.render('post',{locals,data,currentRoute: "/post"});
     } catch (error) {
         console.log(error);
     }
@@ -69,74 +70,16 @@ router.post('/search',async(req,res) => {
                 {body : {$regex : new RegExp(searchNoSpecialChar, "i")}}
             ]
         });
-        res.render("search", { locals, data });
+        res.render("search", { locals, data, currentRoute: "/search" });
     } catch (error) {
         console.log(error);
     }
 });
 
 
-
-
-
-
-
 router.get('/about',(req,res) =>{
-    res.render('about');
+    res.render('about',{currentRoute: "/about"});
 });
 
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function insertPostData(){
-//     Post.insertMany([
-//         {
-//             title: "Building a Blog",
-//             body: "This is the body text for the first blog post."
-//         },
-//         {
-//             title: "Learning NodeJS",
-//             body: "NodeJS helps developers build backend applications using JavaScript."
-//         },
-//         {
-//             title: "Introduction to Express",
-//             body: "Express makes routing and server creation easier in NodeJS."
-//         },
-//         {
-//             title: "Getting Started with MongoDB",
-//             body: "MongoDB stores data in flexible JSON-like documents."
-//         },
-//         {
-//             title: "Understanding EJS Templates",
-//             body: "EJS allows dynamic HTML rendering using JavaScript."
-//         },
-//         {
-//             title: "Why Use Mongoose",
-//             body: "Mongoose provides schema-based modeling for MongoDB."
-//         }
-//     ])
-// }
-// insertPostData();
